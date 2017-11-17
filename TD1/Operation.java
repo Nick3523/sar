@@ -17,7 +17,13 @@ public  void run(){
 	String nom=this.getName();
 	System.out.print(nom);
 
-	this.compte.operationNulle(i);
+	//this.compte.operationNulle(i);
+	synchronized(compte) {
+		
+		this.compte.ajouter(i);
+		this.compte.retirer(i);
+	}
+	
 	int montant=this.compte.getSolde();
 	
 	if (montant !=0){

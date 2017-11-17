@@ -1,12 +1,66 @@
 public class TriParallele extends Thread {
 	
 private int[] t;
-TriParallele(int[] t){
+int debut,fin;
+
+TriParallele(int[] t,int a,int b){
+
 this.t=t;
+debut=a;
+fin=b;
+
+}
+
+
+
+public void affiche() {
+	
+	for (int i = 0; i < t.length; i++) {
+		
+		System.out.println(t[i]+" ");
+	}
+	
 }
 
 public void run() {
-	trifusion(0,t.length-1);
+	
+	synchronized(this){
+	
+	if ((fin-debut)<2){
+		if (t[debut]>t[fin]){
+		permuter(debut,fin);
+		}
+	}
+
+	else{
+		
+		int milieu=debut + (fin-debut)/2;
+		
+		TriParallele t1 = new TriParallele (t,debut,milieu);
+		TriParallele t2 = new TriParallele (t,milieu+1,fin);
+		t1.start();
+		t2.start();
+		synchronized(t1){
+		try {
+			t1.wait();
+			
+
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
+		
+		t1.notify();
+		trifusion(debut,fin);
+
+		}
+	 }
+		notify();
+
+	 }
+	
+
+	
 }
 
 int[] getInternal() {
@@ -23,19 +77,7 @@ private void permuter (int a, int b){
 
 void trier (int debut, int fin){
 	
-if ((fin-debut)<2){
-	if (t[debut]>t[fin]){
-	permuter(debut,fin);
-	}
-}
 
-else{
-	
-	int milieu=debut + (fin-debut)/2;
-	trier(debut,milieu);
-	trier(milieu+1,fin);
-	trifusion(debut,fin);
- }
 }
 
 private void trifusion(int debut, int fin){
