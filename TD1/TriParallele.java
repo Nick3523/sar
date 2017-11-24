@@ -22,9 +22,14 @@ public void affiche() {
 	
 }
 
+public synchronized void notifier() {
+
+	this.nbNotify++;
+	this.notify();
+}
+
 public void run() {
 	
-	synchronized(this){
 	
 	if ((fin-debut)<2){
 		if (t[debut]>t[fin]){
@@ -34,15 +39,17 @@ public void run() {
 
 	else{
 		
-		int milieu=debut + (fin-debut)/2;
-		
-		TriParallele t1 = new TriParallele (t,debut,milieu);
+		int milieu=debut + (fin-debut)/2;						
+																// RAjouter une variable père à notifier quand il termine
+		TriParallele t1 = new TriParallele (t,debut,milieu);  // (this,t,debut,milieu); 
 		TriParallele t2 = new TriParallele (t,milieu+1,fin);
 		t1.start();
 		t2.start();
-		synchronized(t1){
+		synchronized(this){
 		try {
-			t1.wait();
+			
+			wait();
+			wait(); //Pour les 2 fils
 			
 
 		} catch (InterruptedException e) {
@@ -50,17 +57,16 @@ public void run() {
 			e.printStackTrace();
 		}
 		
-		t1.notify();
 		trifusion(debut,fin);
 
 		}
+
+		if( parent != null) {
+
+			parent.notifier(); //Méthode qui fait notify
+		}
 	 }
 		notify();
-
-	 }
-	
-
-	
 }
 
 int[] getInternal() {
