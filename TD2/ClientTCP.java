@@ -5,12 +5,12 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 public class ClientTCP{
 
 public static void main (String[] args){
 	
-	int f;
 	int port = 0;
 	InetAddress hote = null;
 	Socket sc = null;
@@ -38,17 +38,22 @@ public static void main (String[] args){
 	System.err.println("Machine inconnue :" +e);
 	}
 
+	int cpt=0;
 	try{
-			
 			System.out.println("connexion au : "+hote+" port : "+port);
-			sc = new Socket(hote, 9950);
+
+			while (cpt != 10) {
+			sc = new Socket(hote, port);
 			in = new BufferedReader(new InputStreamReader(sc.getInputStream()));
 			String answere = in.readLine();
-			System.out.println("REPONSE : "+answere);
+			System.out.println("REPONSE du serveur: "+answere);
 
 			out = new PrintWriter(sc.getOutputStream(), true);
-			out.println("Bonjour !");
-
+			System.out.println("Entrez une phrase à envoyer au serveur : ");
+			Scanner scan = new Scanner(System.in);			
+			out.println(scan.nextLine());
+			cpt++;
+			}
 	}
 	catch(IOException e){
 		System.err.println("Impossible de creer la socket du client : " +e);
