@@ -22,11 +22,11 @@ public void affiche() {
 	
 }
 
-public synchronized void notifier() {
+/*public synchronized void notifier() {
 
 	this.nbNotify++;
 	this.notify();
-}
+}*/
 
 public void run() {
 	
@@ -61,12 +61,12 @@ public void run() {
 
 		}
 
-		if( parent != null) {
+	/*	if( parent != null) {
 
 			parent.notifier(); //Méthode qui fait notify
-		}
+		}*/
 	 }
-		notify();
+		//notify();
 }
 
 int[] getInternal() {
