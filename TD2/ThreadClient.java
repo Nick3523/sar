@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 
 
@@ -18,42 +19,37 @@ Socket soc;
 
 ThreadClient(Socket ssv) {
 
+
 	soc = ssv;
 	start();
+
 }
 
 
 public void run () {
-
-	System.out.println("TEEEEEEST");
-
-try {
-
-	in=new BufferedReader(new InputStreamReader(soc.getInputStream()));
-
-} 
-
-catch (IOException e1) {
-
-	e1.printStackTrace();
-}
-
-try {
-	out=new PrintWriter(soc.getOutputStream());
-	System.out.println("Entrez une phrase à envoyer au client : ");
-	Scanner scan = new Scanner(System.in);			
-	out.println(scan.nextLine());
-
-} catch (IOException e1) {
-	e1.printStackTrace();
-}
-
-try {String req=in.readLine();out.println(req);
-
-
+	
+	
+	try {
+		out=new PrintWriter(soc.getOutputStream(),true);		
+		out.println("Bonjour et bienvenu");
+		while (true) {
+		in=new BufferedReader(new InputStreamReader(soc.getInputStream()));
+		String answere = in.readLine();
+		System.out.println("Message reçu : "+answere ); //Readline est bloquante
+		if (answere.equals("Bye")) {
+			
+			System.out.println("Au revoir et à bientot !");
+			soc.close();
+			System.exit(0);
+		}
+		Thread.sleep(1000); //Pause d'une seconde
+		out.println("J'ai bien reçu ton message !");
+		}
+	} catch (IOException | InterruptedException e1) {
+		e1.printStackTrace();
 	}
 
-catch(IOException e){}
+
 
 finally{
 
@@ -63,6 +59,7 @@ finally{
 	e.printStackTrace();
    }
   }
+	
  } 
 
 }

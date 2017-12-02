@@ -12,7 +12,7 @@ public class ServeurTCP{
 
 public static void main(String[] args){
 	
-	int port=9950;
+	int port=9951;
 	ServerSocket se;
 	Socket ssv=null;
  	PrintWriter out;

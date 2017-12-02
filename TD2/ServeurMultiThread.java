@@ -26,17 +26,16 @@ catch (Exception e) {}
 
 
 
-System.out.println("Le serveur est à l'écoute :");
+System.out.println("Le serveur est à  l'écoute :");
 
 
  while(true) {		
 
  		try{
-		Socket ssv = se.accept();	//Le client se connecte à la socket de communication
+		Socket ssv = se.accept();	//Le client se connecte à  la socket de communication
 		System.out.println("Connexion acceptée");		
 		ThreadClient tc=new ThreadClient(ssv);
-		//tc.start();	
-		System.out.println("END");		
+		
 		}
 
 		catch (Exception e) {}

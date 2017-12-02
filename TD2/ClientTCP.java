@@ -28,7 +28,7 @@ public static void main (String[] args){
 
 		else{
 
-			port=9950;
+			port=9951;
 			hote=InetAddress.getByName(null);
 
 		}
