@@ -40,7 +40,7 @@ public void run () {
 			
 			System.out.println("Au revoir et à bientot !");
 			soc.close();
-			System.exit(0);
+			return;
 		}
 		Thread.sleep(1000); //Pause d'une seconde
 		out.println("J'ai bien reçu ton message !");
