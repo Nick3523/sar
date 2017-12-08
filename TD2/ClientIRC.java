@@ -12,14 +12,18 @@ public ClientIRC(InetAdress ht, int prt, String nom){
 hote=ht;
 port=prt;
 this.nom=nom;
+start();
 }
 
 public void run(){
 	
   try{
-	sc = new Socket(port);
+	sc = new Socket(hote,port);
+	System.out.println("Connexion acceptée !");
+
 	in = new BufferedReader(new InputStreamReader(sc.getInputStream()));
 	out = new PrintWriter(sc.getOutputStream(),true);
+
 	String rep; 
 	String req;
 	out.println(nom);
@@ -28,15 +32,19 @@ public void run(){
 
 	for (int i = 0; i < 10; i++) {
 	answere=in.readLine(); //recevoir un message du serveur
+	System.out.println("Serveur dit : "+answere);
 	compteur++;//incrementer le nb d'echanges
+
 	Scanner scan = new Scanner(System.in);			
 	out.println(scan.nextLine());				//repondre au serveur
 	Thread.sleep(3000); //Pause 3s
 	}
 
 	answere=in.readLine();  //recevoir un message du serveur
-	Thread.sleep(3000);//faire une pause de 2sec
+	System.out.println("Serveur dit : "+answere);
+	Thread.sleep(2000);//faire une pause de 2sec
 	out.println("Bye"); //envoyer un message « Bye » au serveur
+	
     }
 
 	catch(IOException e){
@@ -60,7 +68,7 @@ public static void main (String[] args){
 	try{
 	if (args.length>=3){
 		
-		hote=InetAddress.getByName(args[0].toString());
+		hote=InetAddress.getByName(args[0]);
 		port=Integer.parseInt(args[1]);
 		nom=args[2];
 	}
